@@ -1,0 +1,15 @@
+FROM kitware/paraview:ci-superbuild-centos7-20210331
+
+USER root
+COPY requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
+
+RUN jupyter notebook --generate-config && \
+    jupyter contrib nbextension install --system && \
+    jupyter nbextensions_configurator enable --system && \
+    echo "c.NotebookApp.ip = '0.0.0.0'\n" >> /root/.jupyter/jupyter_notebook_config.py && \
+    echo "c.NotebookApp.allow_root = True\n" >> /root/.jupyter/jupyter_notebook_config.py
+
+RUN jupyter nbextension install --py mayavi --user && \
+    jupyter nbextension enable --py mayavi --user && \
+    jupyter nbextension enable --py --sys-prefix ipyevents

@@ -1,3 +1,4 @@
+#!/usr/bin/python3.6
 """POD-NN modeling for 1D, unsteady Burger Equation."""
 #%% Imports
 import sys
